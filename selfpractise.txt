@@ -1,0 +1,99 @@
+CREATE DATABASE firstdatabase; 
+
+SHOW DATABASES;
+
+USE firstdatabase;
+
+CREATE TABLE student(
+              student_id int,
+              student_name varchar(30),
+              student_address varchar(30),
+              student_course varchar(30),
+              student_number int(10)
+              );
+SHOW TABLES;
+
+DESCRIBE student;
+
+ALTER TABLE student ADD email varchar(40);
+ALTER TABLE student DROP COLUMN student_id;
+ALTER TABLE student ADD student_id int(20);
+
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('shristi','kapan','BCA','987654321','shristikhatri922@gmail.com','100');
+
+SELECT *from student;
+SELECT student_course FROM student;
+
+
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('gaurav','bhaktapur','CSIT','976432567','gaurav@gmail.com','101');
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('sonam','lalitpur','BBM','987654326','sonam922@gmail.com','102');
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('lhakpa','gaushala','BIM','987654921','lhakpa@gmail.com','103');
+
+DELETE FROM student where student_id=103;
+
+SELECT *FROM student WHERE student_name='shristi'AND student_address='kapan';
+SELECT *FROM student WHERE student_name='gaurav'OR student_address='kapan';
+SELECT *FROM student WHERE NOT student_name='sonam';
+
+SELECT *FROM student WHERE student_id IN(101,102);
+SELECT *FROM student WHERE student_name IN('sonam','gaurav','shristi');
+SELECT *FROM student WHERE student_id BETWEEN 100 AND 101;
+
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('dolma','jorpati','BA','929513976','dolma@gmail.com','104');
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('pema','swayambhu','BBS','918243085','pema@gmail.com','105');
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('tsering','aarubari','MIT','964297154','tsering@gmail.com','106');
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('santosh','kalopul','MSIT','925108652','santosh@gmail.com','107');
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email,student_id)VALUES('sushma','chabhil','MBA','914509352','sushma@gmail.com','108');
+
+select *from student;
+
+select *from student where email LIKE('s%');
+select *from student where email LIKE '%922%';
+select *from student where student_number LIKE '%7';
+
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email)VALUES('ram','chabhil','MBA','914509352','ram@gmail.com');
+INSERT INTO STUDENT(student_name,student_address,student_course,student_number,email)VALUES('shyam','chabhil','MBA','914509352','shyam@gmail.com');
+
+SELECT *FROM student WHERE student_id is null;
+
+
+CREATE TABLE customer(
+              cusid varchar(6),
+              fname varchar(30),
+              lname varchar(30),
+              city varchar(30),
+              mobileno varchar(10),
+              occupation varchar(30),
+              dob date,
+primary key(cusid)
+);
+
+CREATE TABLE account(
+             acnumber varchar(6),
+             cusid varchar(6),
+             openingbalance int(7),
+             atype varchar(10),
+             astatus varchar(10),
+primary key(acnumber),
+constraint fk_account foreign key(cusid)references customer(cusid)
+);
+
+INSERT INTO customer VALUES('c00001','shristi','khatri','kathmandu','987654321','student','2001-12-14');
+INSERT INTO customer VALUES('c00002','ram','lama','lalitpur','9133265843','businessman','1990-08-10');
+INSERT INTO customer VALUES('c00003','shyam','adhikari','bhaktapur','909876543','teacher','2998-07-08');
+INSERT INTO customer VALUES('c00004','hari','shahi','dharan','912346572','marketing','1900-05-06');
+INSERT INTO customer VALUES('c00005','geeta','pokheral','kathmandu','987654000','student','2000-03-14');
+
+select *from customer;
+
+INSERT INTO account VALUES('A00001','C00001','10000','saving','active');
+INSERT INTO account VALUES('A00002','C00002','2000','saving','active');
+INSERT INTO account VALUES('A00003','C00003','5000','saving','suspended');
+INSERT INTO account VALUES('A00004','C00004','100','saving','active');
+INSERT INTO account VALUES('A00005','C00005','8000','saving','active');
+
+select *from account;
+
+select fname,lname,acnumber,openingbalance from customer INNER JOIN account on customer.cusid=account.cusid;
+
+
