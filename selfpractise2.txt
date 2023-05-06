@@ -1,0 +1,113 @@
+create database seconddatabase;
+
+use seconddatabase;
+
+CREATE TABLE customer(
+              cusid varchar(6),
+              fname varchar(30),
+              lname varchar(30),
+              city varchar(30),
+              mobileno varchar(10),
+              occupation varchar(30),
+              dob date,
+primary key(cusid)
+);
+
+create table branch(
+            bid varchar(6),
+            bname varchar(30),
+            bcity varchar(30),
+primary key(bid));
+
+CREATE TABLE account(
+             acnumber varchar(6),
+             cusid varchar(6),
+             bid varchar(6),
+             openingbalance int(7),
+             atype varchar(10),
+             astatus varchar(10),
+primary key(acnumber),
+constraint fk_account foreign key(cusid)references customer(cusid),
+constraint account_bid_fk foreign key(bid)references branch(bid)
+);
+show tables;
+
+INSERT INTO customer VALUES('c00001','shristi','khatri','kathmandu','987654321','student','2001-12-14');
+INSERT INTO customer VALUES('c00002','ram','lama','lalitpur','9133265843','businessman','1990-08-10');
+INSERT INTO customer VALUES('c00003','shyam','adhikari','bhaktapur','909876543','teacher','2998-07-08');
+INSERT INTO customer VALUES('c00004','hari','shahi','dharan','912346572','marketing','1900-05-06');
+INSERT INTO customer VALUES('c00005','geeta','shahi','dharan','912346572','marketing','1900-05-06');
+
+INSERT into branch VALUES('b00001','boudha','kathmandu');
+INSERT into branch VALUES('b00002','kapan','kathmandu');
+INSERT into branch VALUES('b00003','swayambhu','kathmandu');
+INSERT into branch VALUES('b00004','jorpati','kathmandu');
+INSERT into branch VALUES('b00005','lalitpur','lalitpur');
+
+select*from customer;
+select *from branch;
+
+
+
+truncate table account;
+insert into account values('a00001','c00001','b00001','1000','saving','active');
+insert into account values('a00002','c00002','b00002','10000','saving','active');
+insert into account values('a00003','c00003','b00003','80000','saving','suspended');
+insert into account values('a00004','c00004','b00004','5000','saving','active');
+
+select *from account;
+select count(cusid)from customer;
+select count(bid)from branch;
+select count(acnumber)from account;
+
+select *from customer LEFT JOIN account  on customer.cusid=account.cusid;
+select *from account LEFT JOIN customer on account.cusid=customer.cusid;
+
+select *from account RIGHT JOIN customer on account.cusid=customer.cusid;
+select *from account left join customer on account.cusid=customer.cusid
+union
+select *from account right join customer on account.cusid=customer.cusid;
+
+show tables;
+
+create table student(
+             student_id varchar(6),
+             name varchar(30),
+             course_id varchar(30),
+             duration int(6));
+             
+insert into student values('1','shristi','1','6');
+insert into student values('2','ram','6','6');
+insert into student values('1','shristi','2','6');
+insert into student values('2','ram','4','6');
+insert into student values('1','shristi','5','6');
+truncate table student;
+select *from student;
+
+select s1.name,s1.course_id from student as s1,student s2 where s1.name=s2.name AND s1.course_id <>s2.course_id;
+
+create table personalinfo(
+               name varchar(30),
+               address varchar(30),
+               number varchar(10));
+create table personalinfo2(
+              name varchar(30),
+               address varchar(30),
+               number varchar(10));
+insert into personalinfo values('nir','kapan','987654321');
+insert into personalinfo values('dil','boudha','9873254321');
+insert into personalinfo values('mann','jorpati','965432871');
+insert into personalinfo values('saan','kapan','9231212321');
+
+insert into personalinfo2
+select *from personalinfo;
+select *from personalinfo2;
+
+
+update personalinfo set age=40 where name='nir';
+update personalinfo set age=50 where name='dil';
+update personalinfo set age=30 where name='maan';
+update personalinfo set age=60 where name='saan';
+
+alter table personalinfo2 add age int(10);
+
