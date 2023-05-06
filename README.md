@@ -1,0 +1,2 @@
+# sqlpractise
+basic sql practise
